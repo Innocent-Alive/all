@@ -1,0 +1,105 @@
+
+# create new collection
+db.createCollection("students")
+
+# insert one and many
+db.students.insertOne({name:"Abhay", course: "Data Science", age: 21, grade: "A"})
+db.students.insertMany([{name:"Akash", course: "Image Processing", age: 22, grade: "B"}, {name: "Harshika", course: "Networking", age: 21, grade: "A"}])
+
+# find and conditional
+db.students.find().pretty()
+db.students.find({"age": { $gt: 21}})
+
+# delete
+db.students.deleteOne({ name: "Abhay" })
+
+# update one and many
+db.students.updateOne({name: "Harshika"}, { $set: {grade: "B"}})
+db.students.updateMany({grade: "B"}, { $set: {subject: "Web Development"}})
+
+
+
+
+
+
+
+# installation and starting
+wsl --install
+sudo apt update
+sudo apt install redis-server
+sudo service redis-server start
+redis-cli ping  (it should be PONG)
+
+redis-cli
+
+# String
+SET name "Alice"
+GET name
+
+# List
+LPUSH fruits "Apple"
+LPUSH fruits "Banana"
+LPUSH fruits "Cherry"
+LRANGE fruits 0 -1  --> -1 represents the last member, -2 last second member, 0 starting member
+
+# Set 
+SADD colors "Red"
+SADD colors "Blue"
+SADD colors "Green"
+SMEMBERS colors
+
+# Expiry Example
+SET temp "Hello" EX 10
+
+# Increment / Decrement Example
+INCR counter
+DECR counter
+
+# Hash
+HSET user:1000 name "Alice" age 25
+HGETALL user:1000
+
+#Sorted Set
+ZADD scores 120 "abhay" 150 "harshika" 80 "akash"
+ZRANGE scores 0 -1 WITHSCORES
+
+
+
+
+
+
+	
+# start
+cqlsh
+
+# create namespace
+CREATE KEYSPACE company WITH replication = {'class':'SimpleStrategy','replication_factor':1};
+DESCRIBE KEYSPACES;
+
+USE company;
+
+# create table
+CREATE TABLE employees ( employee_id UUID PRIMARY KEY, first_name TEXT, last_name TEXT, position TEXT, 
+salary DOUBLE, date_of_joining DATE );
+DESCRIBE TABLES;
+
+# insert values
+INSERT INTO employees 
+(employee_id, first_name, last_name, position, salary, date_of_joining)
+VALUES (uuid(), 'Abhay', 'Das', 'Software Engineer', 120000, '2022-06-01');
+
+# reading values
+SELECT * FROM employees;
+SELECT first_name, position FROM employees;
+
+# update values
+UPDATE employees SET salary = 125000 WHERE employee_id = <employee_id>;
+
+# delete values
+DELETE FROM employees WHERE employee_id = <employee_id>;
+
+# empty full table
+TRUNCATE employees;
+
+# drop table
+DROP TABLE employees;
